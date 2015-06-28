@@ -4,15 +4,19 @@
   "repository": "https://github.com/strawberrysocialist/strawberrysocialist.github.io.git",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "css-condense": "0.0.6",
-    "grunt-autoprefixer": "^1.0.1",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.2.2",
+    "matchdep": "~0.1.2",
+    "grunt-concurrent": "^2.0.0",
     "grunt-contrib-watch": "^0.5.3",
-    "grunt-cssc": "^0.2.6",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-html-validation": "^0.1.18",
     "grunt-htmlhint": "^0.4.1",
-    "matchdep": "~0.1.2"
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-postcss": "^0.5.4",
+    "grunt-cssc": "^0.2.6",
+    "css-condense": "^0.0.6",
+    "grunt-contrib-cssmin": "^0.12.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-jsbeautifier": "^0.2.10"
   }
 }
