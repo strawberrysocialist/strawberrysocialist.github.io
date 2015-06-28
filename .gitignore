@@ -1,5 +1,5 @@
 # Node-specific files
-./node-modules
+node_modules
 
 # OS-specific files
 .DS_Store
