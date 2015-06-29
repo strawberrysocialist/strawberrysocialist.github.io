@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         options: {
           'tag-pair': true,
           'tagname-lowercase': true,
-          'tag-self-close': true,
+          //'tag-self-close': true,
           'attr-lowercase': true,
           'attr-value-double-quotes': true,
           'attr-no-duplication': true,
@@ -64,6 +64,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src/',
             src: ['*.htm*'],
+            dest: '/*',
             ext: '.html'
           }
         ],
