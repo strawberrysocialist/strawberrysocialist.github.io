@@ -262,6 +262,11 @@ module.exports = function(grunt) {
         limit: 4
     } //concurrent
   }); //initConfig
+
   grunt.registerTask('default', 'watch:src');
   grunt.registerTask('build', 'newer:concurrent');
+  grunt.registerTask('html', ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build']);
+  grunt.registerTask('css', ['newer:postcss:build', 'newer:concat:css']);
+  grunt.registerTask('js', ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js']);
+  grunt.registerTask('img', ['newer:imagemin:build']);
 }; //exports
