@@ -1,20 +1,32 @@
 module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
-    /* General dev utils */
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    /* HTML utils */
-    grunt.loadNpmTasks('grunt-htmlhint');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    /* CSS utils */
-    grunt.loadNpmTasks('grunt-postcss');  /* Brower-specific modifications */
-    grunt.loadNpmTasks('grunt-cssc'); /* Wrapper for css-condense -> Smart CSS minify & grouping */
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    /* JS utils */
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    /* General dev utils
+      // Overhead-related
+      matchdep
+      load-grunt-tasks
+      load-grunt-config
+      // Execution-related
+      grunt-concurrent
+      grunt-contrib-watch
+      grunt-newer
+      grunt-contrib-concat
+    */
+    /* HTML utils
+      grunt-htmlhint
+      grunt-contrib-htmlmin
+    */
+    /* CSS utils
+      / Brower-specific modifications
+      grunt-postcss
+      // Wrapper for css-condense -> Smart CSS minify & grouping
+      grunt-cssc
+      grunt-contrib-cssmin
+    */
+    /* JS utils
+      grunt-contrib-jshint
+      grunt-jsbeautifier
+      grunt-contrib-uglify
+    */
  
     grunt.initConfig ({
       // HTML-focused
@@ -61,41 +73,35 @@ module.exports = function(grunt) {
         },
         options: {
             reset: grunt.option('reset') || false,
-            stoponerror: false,
-            remotePath: 'http://decodize.com/',
-            remoteFiles: ['html/moving-from-wordpress-to-octopress/',
-                          'css/site-preloading-methods/'], //or 
-            remoteFiles: 'validation-files.json', // JSON file contains array of page paths. 
             relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.'] //ignores these errors 
         }
-      }, // validation
+      }, //validation
 
       // CSS-focused
       cssc: {
-        build: {
-           options: {
-            consolidateViaDeclarations: true,
-            consolidateViaSelectors:    true,
-            consolidateMediaQueries:    true
-          }
-        } //build
+        files: {
+          'css/*.css': 'src/css/*.css'
+        },
+        options: {
+          consolidateViaDeclarations: true,
+          consolidateViaSelectors:    true,
+          consolidateMediaQueries:    true
+        }
       }, //cssc
  
       cssmin: {
-        build: {
-            src: '_/css/style.css',
-            dest: '_/css/style.css'
-        } //build
+        files: {
+          'css/*.min.css': 'css/*.css'
+        }
       }, //cssmin
 
       //JS-focused
       jshint: {
-          default: {
-              src: ['src/js/*.js']
-          },
-          options: {
-            force: true
-          } //Report errors but pass the task
+        src: ['src/js/*.js'],
+        options: {
+          //Report errors but pass the task
+          force: true
+        }
       }, //jshint
 
       jsbeautifier: {
@@ -112,22 +118,42 @@ module.exports = function(grunt) {
 
       uglify: {
           default: {
-              files: {
-                  'js/script.js' : ['src/js/*.js'] //compresses and combine multiple js files
+            files: {
+                'js/*.min.js' : ['js/*.js']
+            },
+            options: {
+              preserveComments: 'some',
+              quoteStyle: 1,
+              compress: {
+                sequences: true,
+                properties: true,
+                dead_code: true,
+                drop_debugger: true,
+                conditionals: true,
+                comparisons: true,
+                evaluate: true,
+                booleans: true,
+                loops: true,
+                unused: true,
+                if_return: true,
+                join_vars: true,
+                warnings: true,
+                drop_console: true,
               }
+            }
           }
       }, //uglify
        
       concat: {
           css: {
              src: [
-                   'src/css/merge*.css'
+                   'css/merge*.css'
                   ],
               dest: 'css/merged.css'
           },
           js: {
               src: [
-                  'src/js/merge*.js'
+                  'js/merge*.js'
               ],
               dest: 'js/merged.js',
               options: {
