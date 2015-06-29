@@ -64,7 +64,6 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src/',
             src: ['*.htm*'],
-            dest: '/*',
             ext: '.html'
           }
         ],
@@ -88,7 +87,10 @@ module.exports = function(grunt) {
         ],
         options: {
             reset: grunt.option('reset') || false,
-            relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.'] //ignores these errors 
+            relaxerror: [
+              'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
+              'This interface to HTML5 document checking is deprecated.'
+            ] //ignores these errors 
         }
      }
     }, //validation
