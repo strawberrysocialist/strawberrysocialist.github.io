@@ -325,7 +325,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'watch:src');
   grunt.registerTask('build', 'newer:concurrent');
-  grunt.registerTask('html', ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build']);
+  grunt.registerTask('html', ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:validation:build']);
   grunt.registerTask('css', ['newer:postcss:build', 'newer:concat:css', 'compress:css']);
   grunt.registerTask('js', ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js', 'compress:js']);
   grunt.registerTask('img', ['newer:imagemin:build']);
