@@ -35,7 +35,8 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
-            cwd: 'src',
+            expand: true,
+            cwd: 'src/',
             src: ['*.htm*'],
           }
         ],
@@ -60,7 +61,8 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
-            cwd: 'src',
+            expand: true,
+            cwd: 'src/',
             src: ['*.htm*'],
             ext: '.html'
           }
@@ -79,6 +81,7 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
+            expand: true,
             src: ['*.htm*'],
           }
         ],
@@ -95,9 +98,9 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: 'src/img',
+            cwd: 'src/img/',
             src: ['*'],
-            dest: 'img'
+            dest: 'img/'
           }
         ],
         options: {
@@ -115,9 +118,10 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
-            cwd: 'src/css',
+            expand: true,
+            cwd: 'src/css/',
             src: ['*.css', '!*.min.css'],
-            dest: 'css',
+            dest: 'css/',
             ext: '.min.css'
           }
         ],
@@ -136,7 +140,8 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
-            cwd: 'src/js',
+            expand: true,
+            cwd: 'src/js/',
             src: ['*.js']
           }
         ]
@@ -151,9 +156,10 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
-            cwd: 'src/js',
+            expand: true,
+            cwd: 'src/js/',
             src: ['*.js'],
-            dest: 'js',
+            dest: 'js/',
             ext: '.js'
           }
         ]
@@ -161,7 +167,8 @@ module.exports = function(grunt) {
       git_pre_commit: {
         files: [
           {
-            cwd: 'src/js',
+            expand: true,
+            cwd: 'src/js/',
             src: ['*.js']
           }
         ],
@@ -175,6 +182,7 @@ module.exports = function(grunt) {
       build: {
         files: [
           {
+            expand: true,
             cwd: 'js',
             src: ['*.js', '!*.min.js'],
             dest: 'js',
@@ -203,29 +211,79 @@ module.exports = function(grunt) {
         }
       }
     }, //uglify
-     
+    
+    // General utils
     concat: {
         css: {
-           src: [
-                 'css/merge*.css'
-                ],
-            dest: 'css/merged.css'
+          files: [
+            {
+              expand: true,
+              cwd: 'css/',
+              src: ['merge-*.css'],
+              dest: 'css/merged',
+              ext: '.css'
+            }
+          ]
         },
         js: {
-            src: [
-                'js/merge*.js'
-            ],
-            dest: 'js/merged.js',
-            options: {
-              stripBanners: {
-                block: true,
-                line: true
-              },
-              separator: ';',
+          files: [
+            {
+              expand: true,
+              cwd: 'js/',
+              src: ['merge-*.js'],
+              dest: 'js/merged',
+              ext: '.js'
             }
+          ],
+          options: {
+            separator: ';',
+            stripBanners: {
+              block: true,
+              line: true
+            }
+          }
         }
     }, //concat
-     
+    
+    compress: {
+      html: {
+        files: [
+          {
+            expand: true,
+            cwd: '/',
+            src: ['*.htm*'],
+            dest: '/',
+            ext: '.html.gz'
+          }
+        ]
+      },
+      css: {
+        files: [
+          {
+            expand: true,
+            cwd: 'css/',
+            src: ['*.css'],
+            dest: 'css/',
+            ext: '.css.gz'
+          }
+        ]
+      },
+      js: {
+        files: [
+          {
+            expand: true,
+            cwd: 'js/',
+            src: ['*.js'],
+            dest: 'js/',
+            ext: '.js.gz'
+          }
+        ],
+      },
+      options: {
+        mode: 'gzip'
+      }
+    }, //compress
+
     watch: {
       src: {
           files: ['src/**/*'],
@@ -233,15 +291,15 @@ module.exports = function(grunt) {
       }, //src
       html: {
           files: ['*.htm*'],
-          tasks: ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build']
+          tasks: ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build', 'compress:html']
       }, //html
       css: {
           files: ['src/css/*.css'],
-          tasks: ['newer:postcss:build', 'newer:concat:css']
+          tasks: ['newer:postcss:build', 'newer:concat:css', 'compress:css']
       }, //css
       js: {
           files: ['src/js/*.js'],
-          tasks: ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js']
+          tasks: ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js', 'compress:js']
       }, //js
       img: {
           files: ['src/img/*'],
@@ -259,6 +317,7 @@ module.exports = function(grunt) {
         second: ['htmlmin:build', 'jsbeautifier:build'],
         third: ['htmlvalid:build', 'uglify:build'],
         fourth: ['concat'],
+        fifth: ['compress'],
         limit: 4
     } //concurrent
   }); //initConfig
@@ -266,7 +325,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'watch:src');
   grunt.registerTask('build', 'newer:concurrent');
   grunt.registerTask('html', ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build']);
-  grunt.registerTask('css', ['newer:postcss:build', 'newer:concat:css']);
-  grunt.registerTask('js', ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js']);
+  grunt.registerTask('css', ['newer:postcss:build', 'newer:concat:css', 'compress:css']);
+  grunt.registerTask('js', ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js', 'compress:js']);
   grunt.registerTask('img', ['newer:imagemin:build']);
 }; //exports
