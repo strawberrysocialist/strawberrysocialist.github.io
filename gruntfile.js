@@ -254,7 +254,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             //cwd: '/',
-            src: ['*.htm*'],
+            src: ['*.htm*', '!*.gz'],
             //dest: '/',
             ext: '.html.gz'
           }
@@ -265,7 +265,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'css/',
-            src: ['*.css'],
+            src: ['*.css', '!*.css.gz'],
             dest: 'css/',
             ext: '.css.gz'
           }
@@ -276,7 +276,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'js/',
-            src: ['*.js'],
+            src: ['*.js', '!*.js.gz'],
             dest: 'js/',
             ext: '.js.gz'
           }
