@@ -2,6 +2,7 @@
   "name": "webworkflow",
   "version": "0.0.1",
   "repository": "https://github.com/strawberrysocialist/strawberrysocialist.github.io.git",
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
     "matchdep": "~0.1.2",
