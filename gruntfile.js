@@ -64,6 +64,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src/',
             src: ['*.htm*'],
+            dest: '',
             ext: '.html'
           }
         ]
@@ -331,7 +332,7 @@ module.exports = function(grunt) {
 
     concurrent: {
         first: ['htmlhint:build', 'postcss:build', 'jshint:build', 'imagemin:build'],
-        second: ['newer:inline:build', 'jsbeautifier:build'],
+        second: ['inline:build', 'jsbeautifier:build'],
         third: ['htmlmin:build', 'uglify:build'],
         fourth: ['htmlvalid:build', 'concat'],
         fifth: ['compress'],
