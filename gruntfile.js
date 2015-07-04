@@ -57,13 +57,26 @@ module.exports = function(grunt) {
       }
     }, //htmlhint
 
-    htmlmin: {
+    inline: {
       build: {
         files: [
           {
             expand: true,
             cwd: 'src/',
             src: ['*.htm*'],
+            ext: '.html'
+          }
+        ]
+      }
+    }, //inline
+
+    htmlmin: {
+      build: {
+        files: [
+          {
+            expand: true,
+            cwd: '',
+            src: ['*.html'],
             ext: '.html'
           }
         ],
@@ -131,6 +144,7 @@ module.exports = function(grunt) {
         ],
         options: {
           processors: [
+            require('url')(), // rebase & inline based on url
             require('pixrem')(), // add fallbacks for rem units
             require('autoprefixer-core')({browsers: 'last 2 versions'}), // add vendor prefixes
             require('cssnano')() // minify the result
@@ -294,11 +308,11 @@ module.exports = function(grunt) {
       }, //src
       html: {
           files: ['*.htm*'],
-          tasks: ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:htmlvalid:build', 'compress:html']
+          tasks: ['newer:htmlhint:build', 'newer:inline:build', 'newer:htmlmin:build', 'newer:htmlvalid:build', 'compress:html']
       }, //html
       css: {
           files: ['src/css/*.css'],
-          tasks: ['newer:postcss:build', 'newer:concat:css', 'compress:css']
+          tasks: ['newer:postcss:build', 'newer:inline:build', 'newer:concat:css', 'compress:css']
       }, //css
       js: {
           files: ['src/js/*.js'],
@@ -317,9 +331,9 @@ module.exports = function(grunt) {
 
     concurrent: {
         first: ['htmlhint:build', 'postcss:build', 'jshint:build', 'imagemin:build'],
-        second: ['htmlmin:build', 'jsbeautifier:build'],
-        third: ['htmlvalid:build', 'uglify:build'],
-        fourth: ['concat'],
+        second: ['newer:inline:build', 'jsbeautifier:build'],
+        third: ['htmlmin:build', 'uglify:build'],
+        fourth: ['htmlvalid:build', 'concat'],
         fifth: ['compress'],
         limit: 4
     } //concurrent
@@ -327,8 +341,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'watch:src');
   grunt.registerTask('build', 'newer:concurrent');
-  grunt.registerTask('html', ['newer:htmlhint:build', 'newer:htmlmin:build', 'newer:validation:build', 'compress:html']);
-  grunt.registerTask('css', ['newer:postcss:build', 'newer:concat:css', 'compress:css']);
+  grunt.registerTask('html', ['newer:htmlhint:build', 'newer:inline:build', 'newer:htmlmin:build', 'newer:validation:build', 'compress:html']);
+  grunt.registerTask('css', ['newer:postcss:build', 'newer:inline:build', 'newer:concat:css', 'compress:css']);
   grunt.registerTask('js', ['newer:jshint:build', 'newer:jsbeautifier:build', 'newer:uglify:build', 'newer:concat:js', 'compress:js']);
   grunt.registerTask('img', ['newer:imagemin:build']);
 }; //exports
