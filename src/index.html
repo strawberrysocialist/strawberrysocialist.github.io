@@ -6,18 +6,17 @@
     <meta name="description" content=" FILL ME IN ">
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
-
-    <script>
-      (function(w,g){w['GoogleAnalyticsObject']=g;
-      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
-
-      // Optional TODO: replace with your Google Analytics profile ID.
-      ga('create', 'UA-XXXX-Y');
-      ga('send', 'pageview');
-    </script>
     
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <!--<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">-->
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.3/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: {
+          families: ['Open Sans:400,700']
+        }
+      });
+    </script>
 
     <!--<link href="css/style.css" rel="stylesheet">-->
     <style type="text/css">
@@ -70,9 +69,6 @@
       }
     </style>
     <link href="css/print.css" rel="stylesheet" media="print">
-
-    <script async src="http://www.google-analytics.com/analytics.js"></script>
-    <script async src="js/perfmatters.js"></script>
   </head>
 
   <body>
@@ -120,4 +116,15 @@
       <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
     </footer>
   </body>
+    <script>
+      (function(w,g){w['GoogleAnalyticsObject']=g;
+      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
+
+      // Optional TODO: replace with your Google Analytics profile ID.
+      ga('create', 'UA-XXXX-Y');
+      ga('send', 'pageview');
+    </script>
+
+    <script async src="http://www.google-analytics.com/analytics.js"></script>
+    <script async src="js/perfmatters.js"></script>
 </html>
